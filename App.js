@@ -24,15 +24,26 @@ const getData = async () => {
   }
 }
 
-const load_theme = async () => {
+const get_theme = async () => {
   try{
     let data = await getData();
-    console.log(`data: ${data}`);
-    return data;
+    console.log('retrieved data');
+    console.log(data);
+    return data['theme'];
   }
   catch(e){
     console.log(e);
   }
+}
+
+const load_theme = (updateStateFunction) => {
+  get_theme()
+    .then((val) => {themeOption = val; console.log(`option: ${themeOption}`)})
+    .finally(() => {
+      let newTheme = StyleMerge({}, defaultStyle, Themes[themeOption]); 
+      updateStateFunction(newTheme);//StyleSheet.create(newTheme)); 
+      //console.log(/*`retrieved: ${theme}\noption: ${themeOption}`*/newTheme)
+    });
 }
 
 let defaultStyle = {
@@ -53,22 +64,20 @@ let defaultStyle2 = {
     },
   };
 
+  
+
 export default function App() {
   const [theme, setTheme] = useState(defaultStyle);
   let themeOption = 'dark';
   useEffect(() =>{
-    load_theme()
-    .then((val) => {themeOption = val; console.log(`option: ${themeOption}`)})
-    .finally(() => {
-      let newTheme = StyleMerge({}, defaultStyle, Themes[themeOption]); 
-      setTheme(newTheme);//StyleSheet.create(newTheme)); 
-      //console.log(/*`retrieved: ${theme}\noption: ${themeOption}`*/newTheme)
-    });
+    load_theme(setTheme);
   }, []);
+
   return (
       <View style={theme.container}>
         <Text style={{color: 'red'}}>Open up App.js to start working on your app!</Text>
-        <Button onPress={() => setTheme(defaultStyle)} title='Click me!'/>
+        <Button onPress={() => {storeData({theme: "dark"}).then(() => load_theme(setTheme))}} title='Dark Mode!'/>
+        <Button onPress={() => {storeData({theme: "light"}).then(() => load_theme(setTheme))}} title='Light Mode!'/>
       </View>
   );
 }
