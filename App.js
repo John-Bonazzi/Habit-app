@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Themes, DarkTheme, LightTheme } from './styles/themes';
 import settings from './settings';
-import merge from 'lodash.merge';
+import styleMerge from 'lodash.merge';
 
-const userStyle = Themes[settings.theme]
+const userStyle = Themes[settings.theme];
 
 const defaultStyle = {
     container: {
@@ -26,4 +26,4 @@ export default function App() {
 //FIXME: look at react-native-restart to support theme settings and reload app on theme change to apply new style
 //https://www.npmjs.com/package/react-native-restart
 
-const styles = StyleSheet.create(merge(defaultStyle, userStyle));
+const styles = StyleSheet.create(styleMerge(defaultStyle, userStyle));
