@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { DarkTheme, LightTheme } from './styles/themes';
+import { Themes, DarkTheme, LightTheme } from './styles/themes';
 import settings from './settings';
 import merge from 'lodash.merge';
 
-const userStyle = (settings.theme === 'light') ? {...LightTheme} : {...DarkTheme};
+const userStyle = Themes[settings.theme]
 
 const defaultStyle = {
     container: {
