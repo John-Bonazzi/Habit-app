@@ -41,12 +41,11 @@ const load_theme = (updateStateFunction) => {
     .then((val) => {themeOption = val; console.log(`option: ${themeOption}`)})
     .finally(() => {
       let newTheme = StyleMerge({}, defaultStyle, Themes[themeOption]); 
-      updateStateFunction(newTheme);//StyleSheet.create(newTheme)); 
-      //console.log(/*`retrieved: ${theme}\noption: ${themeOption}`*/newTheme)
+      updateStateFunction(StyleSheet.create(newTheme));
     });
 }
 
-let defaultStyle = {
+const defaultStyle = {
     container: {
       flex: 1,
       backgroundColor: 'white',
@@ -54,17 +53,6 @@ let defaultStyle = {
       justifyContent: 'center',
     },
   };
-
-let defaultStyle2 = {
-    container: {
-      //flex: 1,
-      backgroundColor: 'black',
-      //alignItems: 'center',
-      //justifyContent: 'center',
-    },
-  };
-
-  
 
 export default function App() {
   const [theme, setTheme] = useState(defaultStyle);
@@ -82,8 +70,4 @@ export default function App() {
   );
 }
 
-//FIXME: look at react-native-restart to support theme settings and reload app on theme change to apply new style
-//https://www.npmjs.com/package/react-native-restart
-
 //const styles = StyleSheet.create({});//styleMerge(defaultStyle, userStyle));
-//console.log(styles);
