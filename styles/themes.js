@@ -8,16 +8,13 @@ export const Themes = {
     container:{
       backgroundColor: 'white',
     },
-  }
-}
-export const DarkTheme = {
-  container:{
-    backgroundColor: 'black',
   },
-}
-
-export const LightTheme = {
-  container:{
-    backgroundColor: 'white',
+  default: {
+    container: {
+      flex: 1,
+      backgroundColor: 'white',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   },
 }
