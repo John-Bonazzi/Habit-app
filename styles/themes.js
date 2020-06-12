@@ -9,6 +9,9 @@ export const Themes = {
       backgroundColor: 'white',
     },
   },
+};
+
+export const Styles = {
   default: {
     container: {
       flex: 1,

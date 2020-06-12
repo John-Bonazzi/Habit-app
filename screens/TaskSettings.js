@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const Settings = () => {
+const TaskSettings = () => {
   return (
     <View>
       <Text>Change settings</Text>
@@ -9,4 +9,4 @@ const Settings = () => {
   )
 }
 
-export default Settings;
+export default TaskSettings;
