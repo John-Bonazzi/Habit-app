@@ -1,30 +1,27 @@
 import StyleMerge from 'lodash.merge';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Settings, ProgressViewIOSComponent } from 'react-native';
+import { StyleSheet, Text, View, Settings, YellowBox } from 'react-native';
 import { Button } from 'react-native-elements';
 import { getData, storeData } from './helpers/Storage';
 import { Themes, Styles } from './styles/themes';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer'
 import TaskSettings from './screens/TaskSettings';
 import TaskMaker from './screens/TaskMaker';
 import TaskViewer from './screens/TaskViewer';
 import Loader from './helpers/Loader';
 
-const load_theme = (updateTheme) => {
-  var themeOption;
-  var newTheme;
-  getData('theme')
-    .then((val) => { 
-      themeOption = val;
-      })
-    .finally(() => {
-      newTheme = StyleMerge({}, defaultStyle, Themes[themeOption]); 
-      updateTheme(StyleSheet.create(newTheme));
-    });
-}
+/*
+  Ignore the warning for the Settings screen, since it does not use functionalities that would break the app.
+  Functionalities that can't be used in Settings: 
+    -   deep linking
+    -   state persistence
+  More info at: https://reactnavigation.org/docs/troubleshooting/#i-get-the-warning-non-serializable-values-were-found-in-the-navigation-state
+*/
 
-const defaultStyle = Styles.default;
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
 
 //Used to add stuff to the base drawer, but can't change the base stuff.
 function CustomDrawerContent(props) {
@@ -40,21 +37,21 @@ function CustomDrawerContent(props) {
 }
 
 export default function App() {
+
   const Drawer = createDrawerNavigator();
-  const [theme, setTheme] = useState(defaultStyle);
-  //storeData('theme', 'light');
+  const [theme, setTheme] = useState({...DefaultTheme, ...Styles});
+  const updateTheme = (vals) => {
+    setTheme({...vals, ...Styles});
+  };
+  Loader(updateTheme);
+
   return (
-     <NavigationContainer>
+     <NavigationContainer theme={theme}>
         <Drawer.Navigator initialRouteName='Home'>
           <Drawer.Screen name='Home' component={TaskViewer} ></Drawer.Screen>
           <Drawer.Screen name='Create' component={TaskMaker} ></Drawer.Screen>
-          <Drawer.Screen name='Settings' component={TaskSettings} ></Drawer.Screen>
+          <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{setter: updateTheme}} ></Drawer.Screen>
         </Drawer.Navigator>
       </NavigationContainer>
   );
 }
-/*<View style={theme.container}>
-        <Text style={{color: 'red'}}>Open up App.js to start working on your app!</Text>
-        <Button onPress={() => {storeData('theme', "dark").then(() => load_theme(setTheme))}} title='Dark Mode!'/>
-        <Button onPress={() => {storeData('theme', "light").then(() => load_theme(setTheme))}} title='Light Mode!'/>
-      </View>*/

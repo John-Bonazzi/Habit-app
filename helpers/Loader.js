@@ -1,12 +1,14 @@
 import StyleMerge from 'lodash.merge';
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { getData } from '../helpers/Storage';
+import { getData, storeData } from '../helpers/Storage';
 import { Styles, Themes } from '../styles/themes';
+import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
+
 
 const defaultStyle = StyleSheet.create(Styles.default);
 
-export const load_theme = async (updateTheme) => {
+export const load_theme = (updateTheme) => {
   var themeOption;
   var newTheme;
   getData('theme')
@@ -14,9 +16,13 @@ export const load_theme = async (updateTheme) => {
       themeOption = val;
       })
     .finally(() => {
-      newTheme = StyleMerge({}, defaultStyle, Themes[themeOption]);
-      updateTheme(StyleSheet.create(newTheme));
+      newTheme = themeOption==='dark' ? DarkTheme : DefaultTheme; 
+      updateTheme(newTheme);
     });
+}
+
+export const save_theme = (newTheme) => {
+  storeData('theme', newTheme);
 }
 
 export default Loader = (updateTheme) => {

@@ -1,4 +1,4 @@
-export const Themes = {
+/*export const Themes = {
   dark: {
     container:{
       backgroundColor: 'black',
@@ -15,18 +15,23 @@ export const Themes = {
       color: 'black',
     }
   },
-};
+};*/
+
+export const theme = {...Styles};
+
+export const makeTheme = (key, val) => {
+  theme[key] = {...theme.key, color: val.text};
+  return theme;
+}
 
 export const Styles = {
-  default: {
+  
     container: {
       flex: 1,
-      backgroundColor: 'black',
       alignItems: 'center',
       justifyContent: 'center',
     },
     text: {
-      color: 'black',
+      fontWeight: 'bold',
     }
-  },
 }
