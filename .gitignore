@@ -10,5 +10,6 @@ npm-debug.*
 web-build/
 web-report/
 fb-credentials.js
+sample.json
 # macOS
 .DS_Store
