@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Settings, YellowBox } from 'react-native';
 import { Button } from 'react-native-elements';
 import { getData, storeData } from './helpers/Storage';
-import { Themes, Styles } from './styles/themes';
+import { Themes, Styles, makeTheme } from './styles/themes';
 import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer'
 import TaskSettings from './screens/TaskSettings';
@@ -44,7 +44,7 @@ export default function App() {
     setTheme({...vals, ...Styles});
   };
   Loader(updateTheme);
-
+  makeTheme('text', theme.colors);
   return (
      <NavigationContainer theme={theme}>
         <Drawer.Navigator initialRouteName='Home'>

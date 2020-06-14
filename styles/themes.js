@@ -17,15 +17,11 @@
   },
 };*/
 
-export const theme = {...Styles};
-
 export const makeTheme = (key, val) => {
-  theme[key] = {...theme.key, color: val.text};
-  return theme;
+  Styles[key] = {...Styles.key, color: val.text};
 }
 
 export const Styles = {
-  
     container: {
       flex: 1,
       alignItems: 'center',
