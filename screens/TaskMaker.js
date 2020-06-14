@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { Themes, Styles } from '../styles/themes';
-import Loader from '../helpers/Loader';
+import { useTheme } from '@react-navigation/native';
+import React from 'react';
+import { Text, View } from 'react-native';
+import { Styles } from '../styles/themes';
 
-const defaultStyle = StyleSheet.create(Styles.default);
-
-const TaskMaker = ({route, navigation}) => {
+const TaskMaker = ({ route, navigation }) => {
+  useTheme();
   return (
-    <View style={defaultStyle.container}>
-      <Text>Create a Task</Text>
+    <View style={Styles.container}>
+      <Text style={Styles.text}>Create a Task</Text>
     </View>
   )
 }

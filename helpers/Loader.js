@@ -1,12 +1,8 @@
-import StyleMerge from 'lodash.merge';
+import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { getData, storeData } from '../helpers/Storage';
-import { Styles, Themes } from '../styles/themes';
-import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
-
-
-const defaultStyle = StyleSheet.create(Styles.default);
+import { Styles } from '../styles/themes';
 
 export const load_theme = (updateTheme) => {
   var themeOption;
