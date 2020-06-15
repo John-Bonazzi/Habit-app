@@ -1,15 +1,16 @@
 import StyleMerge from 'lodash.merge';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Settings, YellowBox } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, Header } from 'react-native-elements';
 import { getData, storeData } from './helpers/Storage';
 import { Themes, Styles, makeTheme } from './styles/themes';
-import {NavigationContainer, DefaultTheme, DarkTheme} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme, DarkTheme, DrawerActions} from '@react-navigation/native';
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer'
 import TaskSettings from './screens/TaskSettings';
 import TaskMaker from './screens/TaskMaker';
 import TaskViewer from './screens/TaskViewer';
 import Loader from './helpers/Loader';
+
 
 /*
   Ignore the warning for the Settings screen, since it does not use functionalities that would break the app.
@@ -48,6 +49,7 @@ export default function App() {
   return (
      <NavigationContainer theme={theme}>
         <Drawer.Navigator initialRouteName='Home'>
+          
           <Drawer.Screen name='Home' component={TaskViewer} ></Drawer.Screen>
           <Drawer.Screen name='Create' component={TaskMaker} ></Drawer.Screen>
           <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{setter: updateTheme}} ></Drawer.Screen>

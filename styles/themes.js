@@ -6,8 +6,8 @@ export const Styles = {
     container: {
       flex: 1,
       flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
+      //alignItems: 'center',
+      //justifyContent: 'center',
     },
     text: {
       flex: 1,
