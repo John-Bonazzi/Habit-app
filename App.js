@@ -1,5 +1,5 @@
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer, DarkTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { YellowBox } from 'react-native';
 import { HabitDrawer } from './components/navigation-drawers';
@@ -39,13 +39,13 @@ export default function App() {
   const Drawer = createDrawerNavigator();
   const [theme, setTheme] = useState({ ...DefaultTheme, ...Styles });
   const updateTheme = (vals) => {
-    setTheme({ ...vals, ...Styles });
+    setTheme({ ...Styles, ...vals  });
   };
   Loader(updateTheme);
   makeTheme('text', theme.colors, theme.dark);
   return (
     <NavigationContainer theme={theme}>
-      <Drawer.Navigator initialRouteName='Settings' drawerContent={HabitDrawer}>
+      <Drawer.Navigator initialRouteName='Home' drawerContent={HabitDrawer}>
         <Drawer.Screen name='Home' component={TaskViewer} ></Drawer.Screen>
         <Drawer.Screen name='Create' component={TaskMaker} ></Drawer.Screen>
         <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{ setter: updateTheme }} ></Drawer.Screen>

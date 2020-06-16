@@ -24,8 +24,8 @@ const TaskViewer = ({ route, navigation }) => {
     <View style={Styles.container}>
       <HabitHeader backgroundColor={Styles.myColors.header} buttonColor={Styles.myColors.buttonIcon}/>
       <Text style={Styles.text}>List of tasks</Text>
-      <TaskField title="Completed task" bColor='white' state='completed' failed={false} completed={true} />
-      <TaskField title="Failed Task" bColor='white' state='failed' failed={true} />
+      <TaskField title="Completed task" bColor={Styles.myColors.cards} textStyle={{color: Styles.myColors.text}} state='completed' failed={false} completed={true} />
+      <TaskField title="Failed Task" bColor={Styles.myColors.cards} textStyle={{color: Styles.myColors.text}} state='failed' failed={true} />
       <FloatingButton buttonStyle={{color: Styles.myColors.button}}/>
     </View>
   )

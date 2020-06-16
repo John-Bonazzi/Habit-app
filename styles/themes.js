@@ -1,4 +1,5 @@
 export const makeTheme = (key, val, dark) => {
+  Styles.dark = dark;
   Styles[key] = {...Styles.key, color: val.text};
   Styles['myColors'] = dark ? darkTheme.myColors : lightTheme.myColors;
 }
@@ -19,7 +20,8 @@ const lightTheme = {
   myColors: {
     button: 'green',
     buttonIcon: 'red',
-    cards: 'blue',
+    text: 'black',
+    cards: 'grey',
     header: 'green',
   }
 }
@@ -28,7 +30,8 @@ const darkTheme = {
   myColors: {
     button: 'white',
     buttonIcon: 'black',
-    cards: 'blue',
+    text: 'black',
+    cards: 'white',
     header: 'grey',
   }
 }

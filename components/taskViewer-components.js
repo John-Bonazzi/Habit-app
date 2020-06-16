@@ -51,6 +51,7 @@ export const TaskField = (props) => {
     <View style={{flexDirection: 'row'}}>
     <CheckBox
       title={props.title}
+      textStyle={props.textStyle}
       checked={state.checked}
       onPress={() => { setState({ checked: !state.checked })}}
       containerStyle={{ flex: 1, backgroundColor: props.bColor, borderRadius: 15, overflow: 'hidden',}}

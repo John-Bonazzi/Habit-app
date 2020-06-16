@@ -6,18 +6,16 @@ import { save_theme } from '../helpers/Loader';
 import { Styles } from '../styles/themes';
 import { HabitHeader } from '../components/header-components';
 import CalendarPicker from 'react-native-calendar-picker';
+import {ThemeSelector} from '../components/settings-components';
 
 
-const TaskSettings = ({route, navigation}) => {
+const TaskSettings = ({ route, navigation }) => {
   useTheme();
-  const setTheme = route.params.setter;
   return (
     <View style={Styles.container}>
-              <HabitHeader backgroundColor={Styles.myColors.header} buttonColor={Styles.myColors.buttonIcon}/>
-
-        <Text style={Styles.text}>Change settings</Text>
-        <Button onPress={() => {save_theme('dark'); setTheme(DarkTheme)}} title='Dark Mode!'/>
-        <Button onPress={() => {save_theme('light'); setTheme(DefaultTheme)}} title='Light Mode!'/>
+      <HabitHeader backgroundColor={Styles.myColors.header} buttonColor={Styles.myColors.buttonIcon} />
+      <Text style={Styles.text}>Change settings</Text>
+      <ThemeSelector darkTheme={Styles.dark} setter={route.params.setter}/>
     </View>
   )
 }
