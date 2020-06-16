@@ -9,7 +9,12 @@ import { DatePicker } from '../components/taskMaker-components';
 
 const TaskMaker = ({ route, navigation }) => {
   const theme = useTheme();
-  const [task, setTask] = useState();
+  const [task, setTask] = useState({
+    title: '',
+    description: '',
+    link: '',
+    due_date: new Date().toString(),
+  });
   const modifyTask = (vals) => {
     setTask({
       ...task,
@@ -52,8 +57,14 @@ const TaskMaker = ({ route, navigation }) => {
           showSetter={setShow}
         />
         <Button
-          title="Delete"
-          onPress={() => { setTask({}); setShow(false) }}
+          title="save"
+          onPress={() => { 
+            console.log("At taskMaker, save button: ", task); 
+            setShow(false);
+            let newTask = task;
+            setTask({});
+            navigation.navigate("Home", {task: newTask});
+          }}
         />
         <Button
           title="Delete"

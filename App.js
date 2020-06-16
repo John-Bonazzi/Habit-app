@@ -40,9 +40,7 @@ export default function App() {
 
   
   const [theme, setTheme] = useState({ ...Styles, ...DefaultTheme  });
-  console.log('At App: ', theme);
   const updateTheme = (vals) => {
-    console.log("At app, theme update val: ", vals);
     setTheme({...theme, ...Styles, ...vals  });
   };
   makeTheme(theme);
@@ -51,12 +49,6 @@ export default function App() {
     load_theme(updateTheme);
     const state = navigationRef.current.getRootState();
     routeNameRef.current = getActiveRouteName(state);
-    try{
-      initHabitDB();
-    }
-    catch(err){
-      console.log("Error at App: ", err);
-    }
   }, []);
   
   const Drawer = createDrawerNavigator();

@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import { CheckBox, Button, Card } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons'; 
 import { FloatingAction } from "react-native-floating-action";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 
 
 const defineActions = (style) => {
@@ -66,12 +66,21 @@ export const TaskCard = (props) => {
   return(
     <Card
       title={TaskField(props)}
-      >
-        <Text>wow</Text>
+    >
+      <Text style={props.textStyle}>{props.description}</Text>
       </Card>
   )
 }
-//Make it more professional, but it will be used to return a different component based on props
+export const RenderTask = () => {
+  const props = {
+    card: theme.card, 
+    bColor: theme.myColors.cards, 
+    textStyle:{color: theme.myColors.text},
+    item: item
+  };
+  return props.card ? TaskCard(props) : TaskField(props);
+}
+
 export const TaskView = (props) => {
   return props.card ? TaskCard(props) : TaskField(props);
 }

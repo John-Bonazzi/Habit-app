@@ -10,7 +10,7 @@ const Calendar = (props) => {
   else{
     return(
       <CalendarPicker
-        onDateChange={value => {props.setter({due_date: value})}}  
+        onDateChange={value => {props.setter({due_date: new Date(value).toString()})}}  
       />
     )
   }
