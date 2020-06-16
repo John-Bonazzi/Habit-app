@@ -1,13 +1,14 @@
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
 import { DefaultTheme, NavigationContainer, DarkTheme } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { YellowBox } from 'react-native';
 import { HabitDrawer } from './components/navigation-drawers';
-import Loader from './helpers/Loader';
+import {load_theme} from './helpers/Loader';
 import TaskMaker from './screens/TaskMaker';
 import TaskSettings from './screens/TaskSettings';
 import TaskViewer from './screens/TaskViewer';
 import { makeTheme, Styles } from './styles/themes';
+import * as Analytics from 'expo-firebase-analytics';
 
 /*
   Ignore the warning for the Settings screen, since it does not use functionalities that would break the app.
@@ -21,34 +22,50 @@ YellowBox.ignoreWarnings([
   'Non-serializable values were found in the navigation state',
 ]);
 
-//Used to add stuff to the base drawer, but can't change the base stuff.
-function CustomDrawerContent(props) {
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <DrawerItem
-        label="Help"
-        onPress={() => props.navigation.navigate('Settings')}
-      />
-    </DrawerContentScrollView>
-  );
-}
+// Gets the current screen from navigation state
+const getActiveRouteName = state => {
+  const route = state.routes[state.index];
+  if (route.state) {
+    // Dive into nested navigators
+    return getActiveRouteName(route.state);
+  }
+  return route.name;
+};
 
 export default function App() {
 
-  const Drawer = createDrawerNavigator();
+  const routeNameRef = React.useRef();
+  const navigationRef = React.useRef();
+
+  
   const [theme, setTheme] = useState({ ...Styles, ...DefaultTheme  });
   console.log('At App: ', theme);
   const updateTheme = (vals) => {
     console.log("At app, theme update val: ", vals);
     setTheme({...theme, ...Styles, ...vals  });
   };
-
-  Loader(updateTheme);
   makeTheme(theme);
+
+  useEffect(() =>{
+    load_theme(updateTheme);
+    const state = navigationRef.current.getRootState();
+    routeNameRef.current = getActiveRouteName(state);
+  }, []);
   
+  const Drawer = createDrawerNavigator();
+
   return (
-    <NavigationContainer theme={theme}>
+    <NavigationContainer 
+      theme={theme}
+      ref={navigationRef}
+      onStateChange={(state) => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = getActiveRouteName(state);
+        if (previousRouteName !== currentRouteName) {
+          Analytics.setCurrentScreen(currentRouteName, currentRouteName);
+        }
+      }}
+    >
       <Drawer.Navigator initialRouteName='Home' drawerContent={HabitDrawer}>
         <Drawer.Screen name='Home' component={TaskViewer} ></Drawer.Screen>
         <Drawer.Screen name='Create' component={TaskMaker} ></Drawer.Screen>

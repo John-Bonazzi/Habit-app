@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "87583530664",
+    "firebase_url": "https://habit-9d20a.firebaseio.com",
+    "project_id": "habit-9d20a",
+    "storage_bucket": "habit-9d20a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87583530664:android:46165883a6d564a6e9ac9d",
+        "android_client_info": {
+          "package_name": "com.bonazzi.habit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87583530664-a3mhlbvj2janmj7d9neqmq5fga2a5jsj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVKjWgPtMMVvfxwkCNVqDn-F2q5WFyNsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87583530664-a3mhlbvj2janmj7d9neqmq5fga2a5jsj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

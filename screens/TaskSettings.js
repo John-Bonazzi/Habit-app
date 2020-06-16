@@ -12,12 +12,12 @@ import {OptionSelector} from '../components/settings-components';
 const TaskSettings = ({ route, navigation }) => {
   const theme = useTheme();
   return (
-    <View style={Styles.container}>
-      <HabitHeader backgroundColor={Styles.myColors.header} buttonColor={Styles.myColors.buttonIcon} />
-      <Text style={Styles.text}>Change settings</Text>
+    <View style={theme.container}>
+      <HabitHeader backgroundColor={theme.myColors.header} buttonColor={theme.myColors.buttonIcon}/>
+      <Text style={{color: theme.myColors.text}}>Change settings</Text>
       <OptionSelector
         title='Theme' 
-        condition={Styles.dark} 
+        condition={theme.dark} 
         buttonTitles={['Dark', 'Light']} 
         setter={route.params.setter}
         saver={save_theme}

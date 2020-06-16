@@ -22,7 +22,29 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "edu.gvsu.reminders",
+      "buildNumber": "1.0.0",
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "android": {
+      "package": "edu.gvsu.reminders",
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyCs8CKEYmUh9Aq0MU5s5lrnGveL6oqPkxQ",
+          "authDomain": "habit-9d20a.firebaseapp.com",
+          "databaseURL": "https://habit-9d20a.firebaseio.com",
+          "projectId": "habit-9d20a",
+          "storageBucket": "habit-9d20a.appspot.com",
+          "messagingSenderId": "87583530664",
+          "appId": "1:87583530664:web:bd3398337e11d350e9ac9d",
+          "measurementId": "G-CEFL2F2SFL"
+        }
+      }
     }
   }
 }

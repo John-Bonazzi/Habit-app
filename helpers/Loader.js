@@ -2,14 +2,15 @@ import { DarkTheme, DefaultTheme } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { getData, storeData } from '../helpers/Storage';
-import { Styles, darkTheme, lightTheme } from '../styles/themes';
+import { Styles, darkTheme, lightTheme, makeTheme } from '../styles/themes';
 
 export const load_theme = async (updateTheme) => {
   var themeOption = await getData('theme');
   var option = await task_style();
-  var newTheme = themeOption==='dark' ? {...DarkTheme, ...darkTheme} : {...DefaultTheme, ...lightTheme};
+  var newTheme = themeOption==='dark' ? {...Styles ,...DarkTheme, ...darkTheme} : {...Styles ,...DefaultTheme, ...lightTheme};
   newTheme = {...newTheme, card: option};
   console.log("At loader, load_theme: ", newTheme);
+  makeTheme(newTheme);
   updateTheme(newTheme);
 }
 
@@ -31,10 +32,4 @@ export const save_theme = (newTheme) => {
 
 export const save_card_style = (newTheme) => {
   storeData('card', newTheme);
-}
-
-export default Loader = (updateTheme) => {
-  useEffect(() =>{
-    load_theme(updateTheme);
-  }, []);
 }

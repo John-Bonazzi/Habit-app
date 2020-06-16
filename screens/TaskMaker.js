@@ -8,7 +8,7 @@ import { Input, Button } from 'react-native-elements';
 import { DatePicker } from '../components/taskMaker-components';
 
 const TaskMaker = ({ route, navigation }) => {
-  useTheme();
+  const theme = useTheme();
   const [task, setTask] = useState();
   const modifyTask = (vals) => {
     setTask({
@@ -21,8 +21,8 @@ const TaskMaker = ({ route, navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={Styles.container}>
-      <HabitHeader backgroundColor={Styles.myColors.header} buttonColor={Styles.myColors.buttonIcon}/>
+      <View style={theme.container}>
+      <HabitHeader backgroundColor={theme.myColors.header} buttonColor={theme.myColors.buttonIcon}/>
         <Input
           onFocus={() => { setShow(false) }}
           label='Title'

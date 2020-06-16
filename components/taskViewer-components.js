@@ -73,6 +73,5 @@ export const TaskCard = (props) => {
 }
 //Make it more professional, but it will be used to return a different component based on props
 export const TaskView = (props) => {
-  console.log("At task viewer components, task view: ", props.card);
   return props.card ? TaskCard(props) : TaskField(props);
 }
