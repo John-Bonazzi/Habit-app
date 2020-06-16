@@ -23,7 +23,6 @@ const TaskMaker = ({ route, navigation }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={Styles.container}>
       <HabitHeader backgroundColor={Styles.myColors.header} buttonColor={Styles.myColors.buttonIcon}/>
-
         <Input
           onFocus={() => { setShow(false) }}
           label='Title'
@@ -35,6 +34,14 @@ const TaskMaker = ({ route, navigation }) => {
           label='Description (optional)'
           value={task?.description}
           onChangeText={val => modifyTask({ description: val })}
+          multiline
+          textAlignVertical='center'
+        />
+          <Input
+          onFocus={() => { setShow(false); }}
+          label='Link to Youtube video'
+          value={task?.link}
+          onChangeText={val => modifyTask({ link: val })}
           multiline
           textAlignVertical='center'
         />

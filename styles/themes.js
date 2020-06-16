@@ -1,7 +1,11 @@
-export const makeTheme = (key, val, dark) => {
-  Styles.dark = dark;
-  Styles[key] = {...Styles.key, color: val.text};
-  Styles['myColors'] = dark ? darkTheme.myColors : lightTheme.myColors;
+import { useTheme } from "@react-navigation/native";
+
+export const makeTheme = (theme) => {
+  Styles.dark = theme.dark;
+  Styles.colors = theme.colors;
+  Styles['text'] = {...Styles.text, color: theme.colors.text};
+  Styles['card'] = theme.card;
+  Styles['myColors'] = theme.dark ? darkTheme.myColors : lightTheme.myColors;
 }
 
 export const Styles = {
@@ -10,13 +14,12 @@ export const Styles = {
       flexDirection: 'column',
     },
     text: {
-      flex: 1,
       fontWeight: 'bold',
     },
-    myColors: lightTheme,
+    myColors: {lightTheme},
 }
 
-const lightTheme = {
+export const lightTheme = {
   myColors: {
     button: 'green',
     buttonIcon: 'red',
@@ -26,7 +29,7 @@ const lightTheme = {
   }
 }
 
-const darkTheme = {
+export const darkTheme = {
   myColors: {
     button: 'white',
     buttonIcon: 'black',

@@ -37,18 +37,22 @@ function CustomDrawerContent(props) {
 export default function App() {
 
   const Drawer = createDrawerNavigator();
-  const [theme, setTheme] = useState({ ...DefaultTheme, ...Styles });
+  const [theme, setTheme] = useState({ ...Styles, ...DefaultTheme  });
+  console.log('At App: ', theme);
   const updateTheme = (vals) => {
-    setTheme({ ...Styles, ...vals  });
+    console.log("At app, theme update val: ", vals);
+    setTheme({...theme, ...Styles, ...vals  });
   };
+
   Loader(updateTheme);
-  makeTheme('text', theme.colors, theme.dark);
+  makeTheme(theme);
+  
   return (
     <NavigationContainer theme={theme}>
       <Drawer.Navigator initialRouteName='Home' drawerContent={HabitDrawer}>
         <Drawer.Screen name='Home' component={TaskViewer} ></Drawer.Screen>
         <Drawer.Screen name='Create' component={TaskMaker} ></Drawer.Screen>
-        <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{ setter: updateTheme }} ></Drawer.Screen>
+        <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{ setter: updateTheme}} ></Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {View} from 'react-native';
-import { CheckBox, Button } from 'react-native-elements';
+import {View, Text} from 'react-native';
+import { CheckBox, Button, Card } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons'; 
 import { FloatingAction } from "react-native-floating-action";
 import { useNavigation } from '@react-navigation/native';
@@ -62,8 +62,17 @@ export const TaskField = (props) => {
     )
 }
 
+export const TaskCard = (props) => {
+  return(
+    <Card
+      title={TaskField(props)}
+      >
+        <Text>wow</Text>
+      </Card>
+  )
+}
 //Make it more professional, but it will be used to return a different component based on props
-const isSpooky = (props) => {
-  var die = props.ne;
-  return die ? 'Spooky' : 'Not Spooky';
+export const TaskView = (props) => {
+  console.log("At task viewer components, task view: ", props.card);
+  return props.card ? TaskCard(props) : TaskField(props);
 }
