@@ -1,16 +1,13 @@
-import StyleMerge from 'lodash.merge';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Settings, YellowBox } from 'react-native';
-import { Button, Header } from 'react-native-elements';
-import { getData, storeData } from './helpers/Storage';
-import { Themes, Styles, makeTheme } from './styles/themes';
-import {NavigationContainer, DefaultTheme, DarkTheme, DrawerActions} from '@react-navigation/native';
-import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer'
-import TaskSettings from './screens/TaskSettings';
-import TaskMaker from './screens/TaskMaker';
-import TaskViewer from './screens/TaskViewer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { YellowBox } from 'react-native';
+import { HabitDrawer } from './components/navigation-drawers';
 import Loader from './helpers/Loader';
-
+import TaskMaker from './screens/TaskMaker';
+import TaskSettings from './screens/TaskSettings';
+import TaskViewer from './screens/TaskViewer';
+import { makeTheme, Styles } from './styles/themes';
 
 /*
   Ignore the warning for the Settings screen, since it does not use functionalities that would break the app.
@@ -40,20 +37,19 @@ function CustomDrawerContent(props) {
 export default function App() {
 
   const Drawer = createDrawerNavigator();
-  const [theme, setTheme] = useState({...DefaultTheme, ...Styles});
+  const [theme, setTheme] = useState({ ...DefaultTheme, ...Styles });
   const updateTheme = (vals) => {
-    setTheme({...vals, ...Styles});
+    setTheme({ ...vals, ...Styles });
   };
   Loader(updateTheme);
-  makeTheme('text', theme.colors);
+  makeTheme('text', theme.colors, theme.dark);
   return (
-     <NavigationContainer theme={theme}>
-        <Drawer.Navigator initialRouteName='Home'>
-          
-          <Drawer.Screen name='Home' component={TaskViewer} ></Drawer.Screen>
-          <Drawer.Screen name='Create' component={TaskMaker} ></Drawer.Screen>
-          <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{setter: updateTheme}} ></Drawer.Screen>
-        </Drawer.Navigator>
-      </NavigationContainer>
+    <NavigationContainer theme={theme}>
+      <Drawer.Navigator initialRouteName='Settings' drawerContent={HabitDrawer}>
+        <Drawer.Screen name='Home' component={TaskViewer} ></Drawer.Screen>
+        <Drawer.Screen name='Create' component={TaskMaker} ></Drawer.Screen>
+        <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{ setter: updateTheme }} ></Drawer.Screen>
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }

@@ -22,7 +22,8 @@ const TaskMaker = ({ route, navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={Styles.container}>
-        <HabitHeader />
+      <HabitHeader backgroundColor={Styles.myColors.header} buttonColor={Styles.myColors.buttonIcon}/>
+
         <Input
           onFocus={() => { setShow(false) }}
           label='Title'

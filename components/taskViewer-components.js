@@ -20,7 +20,6 @@ const defineActions = (style) => {
 
 export const FloatingButton = (props) => {
   const navigation = useNavigation();
-  console.log(props);
   const actions = defineActions(props.buttonStyle);
   return(
     <FloatingAction

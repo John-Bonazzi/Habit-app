@@ -18,16 +18,15 @@ const actions = [
 ];
 
 const TaskViewer = ({ route, navigation }) => {
-  useTheme(); //For now I am not using the values passed by the theme, but using my own.
-
+  const {colors} = useTheme(); //For now I am not using the values passed by the theme, but using my own.
   return (
 
     <View style={Styles.container}>
-      <HabitHeader />
+      <HabitHeader backgroundColor={Styles.myColors.header} buttonColor={Styles.myColors.buttonIcon}/>
       <Text style={Styles.text}>List of tasks</Text>
       <TaskField title="Completed task" bColor='white' state='completed' failed={false} completed={true} />
       <TaskField title="Failed Task" bColor='white' state='failed' failed={true} />
-      <FloatingButton buttonStyle={{color: 'red'}}/>
+      <FloatingButton buttonStyle={{color: Styles.myColors.button}}/>
     </View>
   )
 }

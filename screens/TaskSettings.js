@@ -13,7 +13,8 @@ const TaskSettings = ({route, navigation}) => {
   const setTheme = route.params.setter;
   return (
     <View style={Styles.container}>
-        <HabitHeader />
+              <HabitHeader backgroundColor={Styles.myColors.header} buttonColor={Styles.myColors.buttonIcon}/>
+
         <Text style={Styles.text}>Change settings</Text>
         <Button onPress={() => {save_theme('dark'); setTheme(DarkTheme)}} title='Dark Mode!'/>
         <Button onPress={() => {save_theme('light'); setTheme(DefaultTheme)}} title='Light Mode!'/>
