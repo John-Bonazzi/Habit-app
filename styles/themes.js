@@ -2,7 +2,7 @@ import { useTheme } from "@react-navigation/native";
 
 export const lightTheme = {
   myColors: {
-    button: 'green',
+    button: 'grey',
     buttonIcon: 'red',
     text: 'black',
     cards: 'grey',
@@ -12,7 +12,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   myColors: {
-    button: 'white',
+    button: 'grey',
     buttonIcon: 'black',
     text: 'red',
     cards: 'white',
