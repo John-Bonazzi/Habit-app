@@ -9,6 +9,7 @@ import TaskSettings from './screens/TaskSettings';
 import TaskViewer from './screens/TaskViewer';
 import { makeTheme, Styles } from './styles/themes';
 import * as Analytics from 'expo-firebase-analytics';
+import { initHabitDB } from './database/fb-tasks';
 
 /*
   Ignore the warning for the Settings screen, since it does not use functionalities that would break the app.
@@ -50,6 +51,12 @@ export default function App() {
     load_theme(updateTheme);
     const state = navigationRef.current.getRootState();
     routeNameRef.current = getActiveRouteName(state);
+    try{
+      initHabitDB();
+    }
+    catch(err){
+      console.log("Error at App: ", err);
+    }
   }, []);
   
   const Drawer = createDrawerNavigator();

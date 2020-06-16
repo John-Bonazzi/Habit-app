@@ -1,5 +1,5 @@
 import { useTheme } from '@react-navigation/native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { TaskField, FloatingButton, TaskCard, TaskView } from '../components/taskViewer-components';
 import { Styles } from '../styles/themes';
@@ -7,18 +7,22 @@ import { Button, Header } from 'react-native-elements';
 import { HabitHeader } from '../components/header-components';
 import { FloatingAction } from "react-native-floating-action";
 import { Feather } from '@expo/vector-icons'; 
-
-const actions = [
-  {
-    text: "Spooky",
-    icon: <Feather name="plus" size={24} color="black" />,
-    name: 'bt_spooky',
-    position: 1
-  }
-];
+import { setupHabitListener, storeTask } from '../database/fb-tasks';
 
 const TaskViewer = ({ route, navigation }) => {
   const theme = useTheme();
+  const [tasks, setTasks] = useState([]);
+  useEffect(() => {
+    setupHabitListener(setTasks);
+  }, []);
+
+  useEffect(() => {
+    if (route.params?.task){
+      console.log('At TaskViewer, useEffect: ', route.params.task);
+      storeTask(route.params);
+    }
+  }, [route.params?.task]);
+  
   return (
 
     <View style={theme.container}>

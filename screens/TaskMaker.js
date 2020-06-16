@@ -55,6 +55,10 @@ const TaskMaker = ({ route, navigation }) => {
           title="Delete"
           onPress={() => { setTask({}); setShow(false) }}
         />
+        <Button
+          title="Delete"
+          onPress={() => { setTask({}); setShow(false) }}
+        />
       </View>
     </TouchableWithoutFeedback>
   )

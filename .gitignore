@@ -12,5 +12,8 @@ web-build/
 web-report/
 fb-credentials.js
 sample.json
+app.json
+google-services.json
+GoogleService-Info.plist
 # macOS
 .DS_Store
