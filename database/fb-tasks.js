@@ -26,12 +26,12 @@ export function setupHabitListener(updateFunc) {
     .database()
     .ref('Habit/')
     .on('value', (snapshot) => {
-      console.log('setupHabitListener fires up with: ', snapshot);
+      //console.log('setupHabitListener fires up with: ', snapshot);
       if (snapshot?.val()) {
         const fbObject = snapshot.val();
         const newArr = [];
         Object.keys(fbObject).map((key, index) => {
-          console.log(key, '||', index, '||', fbObject[key]);
+          //console.log(key, '||', index, '||', fbObject[key]);
           newArr.push({ ...fbObject[key], id: key });
         });
         updateFunc(newArr);

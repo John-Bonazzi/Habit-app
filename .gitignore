@@ -15,5 +15,6 @@ sample.json
 app.json
 google-services.json
 GoogleService-Info.plist
+YTKey.js
 # macOS
 .DS_Store

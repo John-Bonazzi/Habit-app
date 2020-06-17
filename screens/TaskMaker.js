@@ -10,10 +10,11 @@ import { DatePicker } from '../components/taskMaker-components';
 const TaskMaker = ({ route, navigation }) => {
   const theme = useTheme();
   const [mode, setMode] = useState({mode: 'default'});
+  const [search, setSearch] = useState('');
   const [task, setTask] = useState({
     title: '',
     description: '',
-    link: '',
+    video: {},
     due_date: new Date().toString(),
   });
   const modifyTask = (vals) => {
@@ -28,11 +29,10 @@ const TaskMaker = ({ route, navigation }) => {
   useEffect(() =>{
     if(route.params?.task){
       let task = route.params.task;
-      console.log('passed task in taskMaker: ', task);
       setTask({
         title: task.title,
         description: task.description,
-        link: task.link ? task.link : '',
+        video: task.video ? task.video : {},
         due_date: new Date(task.dates.due_date).toString(),
       });
       setMode({mode: 'edit', key: route.params.task.id});
@@ -40,8 +40,11 @@ const TaskMaker = ({ route, navigation }) => {
     else{
       setMode('default');
     }
-  }, [route.params?.task]);
-  console.log('At TaskMaker, route: ', route.params);
+    if(route.params?.video){
+      modifyTask({video: route.params.video});
+    }
+  }, [route.params?.task, route.params?.video]);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={theme.container}>
@@ -60,13 +63,25 @@ const TaskMaker = ({ route, navigation }) => {
           multiline
           textAlignVertical='center'
         />
-          <Input
+        <Input
           onFocus={() => { setShow(false); }}
           label='Link to Youtube video'
-          value={task?.link}
-          onChangeText={val => modifyTask({ link: val })}
+          value={search}
+          onChangeText={val => setSearch(val)}
           multiline
           textAlignVertical='center'
+        />
+        <Input
+          onFocus={() => { setShow(false); }}
+          disabled
+          label='Link From VIDEO'
+          value={`youtube.com/watch?v=${task.video?.id?.videoId ? task.video.id.videoId : ''}`}
+          multiline
+          textAlignVertical='center'
+        />
+        <Button
+          title='Search'
+          onPress={() =>navigation.navigate('Search', {search: search})}
         />
         <DatePicker
           selectedStartDate={task?.due_date}
