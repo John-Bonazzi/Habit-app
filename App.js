@@ -86,7 +86,7 @@ export default function App() {
         }
       }}
     >
-      <Drawer.Navigator initialRouteName='Home' drawerContent={HabitDrawer}>
+      <Drawer.Navigator initialRouteName='Home' drawerContent={HabitDrawer} drawerContentOptions={{ activeTintColor: theme.myColors.drawerTint }}>
         <Drawer.Screen name='Home' component={TaskViewer} initialParams={{mode:'default'}}></Drawer.Screen>
         <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{ setter: updateTheme}} ></Drawer.Screen>
         <Drawer.Screen name='Create' component={TaskMaker} ></Drawer.Screen>

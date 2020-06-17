@@ -5,11 +5,12 @@ import {
 import { Feather, FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
 import React, { useState } from 'react';
 
-export const HabitDrawer = (props) => {
+export const HabitDrawer = (props, theme) => {
   const index = props.state.index;
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItem
+        {...props}
         label='Home'
         icon={({color, size}) =><FontAwesome5 name="tasks" size={size} color={color} />}
         labelStyle={{textAlign: 'right', justifyContent: 'flex-end'}}
@@ -29,6 +30,7 @@ export const HabitDrawer = (props) => {
         onPress={() => {props.navigation.navigate('Home', {mode: 'default', filter: 'completed'}); }}
       />
       <DrawerItem
+        {...props}
         label='Settings'
         icon={({color, size}) => <Feather name="settings" size={size} color={color}/>}
         focused={index === 1}

@@ -57,7 +57,7 @@ const TaskMaker = ({ route, navigation }) => {
       <View style={{ flex: 1 }}>
         <ScrollView>
           <View style={theme.container}>
-            <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} buttonColor={theme.myColors.buttonIcon} />
+            <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} titleSize={40} buttonColor={theme.myColors.buttonIcon} />
             <Input
               onFocus={() => { setShow(false) }}
               inputContainerStyle={{marginRight: 30}}

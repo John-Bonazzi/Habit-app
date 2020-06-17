@@ -2,6 +2,7 @@ import { useTheme } from "@react-navigation/native";
 
 export const lightTheme = {
   myColors: {
+    drawerTint: '#9ABA23',
     button: '#B95411',
     optionButton: '#9ABA23',
     newButton: '#9ABA23',
@@ -16,6 +17,7 @@ export const lightTheme = {
 
 export const darkTheme = {
   myColors: {
+    drawerTint: '#23B2BA',
     button: '#B95411',
     optionButton: '#7D07BA',
     newButton: '#9ABA23',
