@@ -11,7 +11,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const defineActions = (style) => {
   return [
     {
-      color:'#9ABA23',
+      color: '#9ABA23',
       text: 'New',
       icon: <Feather name="plus" size={24} color="white" />,
       name: 'bt_new',
@@ -36,20 +36,42 @@ const defineActions = (style) => {
 }
 
 export const FloatingButton = (props) => {
+  const [toggle, setToggle] = useState({ edit: false, delete: false });
   const navigation = useNavigation();
   const actions = defineActions(props.buttonStyle);
   const setMode = props.setter;
+  const setHeader = props.headerSetter;
   return (
     <FloatingAction
       color={props.buttonStyle.color}
       actions={actions}
       onPressItem={name => {
-        if (name === 'bt_new')
-          navigation.navigate("Create", {task: {}, edit: false});
-        else if (name === 'bt_edit')
-          setMode('edit');
-        else if (name === 'bt_delete')
-          setMode('delete');
+        if (name === 'bt_new'){
+          setToggle({ edit: false, delete: false });
+          navigation.navigate("Create", { task: {}, edit: false });
+        }
+        else if (name === 'bt_edit') {
+          if (!toggle.edit) {
+            setMode('edit');
+            setHeader('Edit task');
+            setToggle({ edit: true, delete: false });
+          } else {
+            setMode('default');
+            setHeader('Tasks');
+            setToggle({ edit: false, delete: false });
+          }
+        }
+        else if (name === 'bt_delete') {
+          if (!toggle.delete) {
+            setMode('delete');
+            setHeader('Delete task');
+            setToggle({ edit: false, delete: true });
+          } else {
+            setMode('default');
+            setHeader('Tasks');
+            setToggle({ edit: false, delete: false });
+          }
+        }
       }}
     />
   );
@@ -87,7 +109,8 @@ export const TaskField = (props) => {
             setState({ checked: !props.state.checked });
             let newTask = { ...props.item, state: !props.state.checked ? 'completed' : 'incomplete' }; //using not because the new value has not been assigned yet
             updateTask(newTask);
-          }}
+          }
+        }
         }
         containerStyle={{ flex: 1, backgroundColor: props.bColor, borderRadius: 15, overflow: 'hidden', borderColor: props.bColor }}
         checkedIcon={props.item.state === 'failed' ? taskFailedIcon() : taskCompletedIcon()}
@@ -103,12 +126,12 @@ export const TaskCard = (props) => {
   return (
 
     <Card
-      containerStyle={{borderRadius: 20, borderWidth: 0,backgroundColor: props.bColor}}
+      containerStyle={{ borderRadius: 20, borderWidth: 0, backgroundColor: props.bColor }}
       title={TaskField(props)}
     >
       <TouchableOpacity
-        onPress={() =>{
-            navigation.navigate('Viewer', {video: props.item.video});
+        onPress={() => {
+          navigation.navigate('Viewer', { video: props.item.video });
         }}
       >
         {props.item.video ?
@@ -118,8 +141,8 @@ export const TaskCard = (props) => {
           /> :
           <View></View>}
       </TouchableOpacity>
-      <View style={{minHeight: 40}}>
-        <View style={{borderColor: 'black', borderWidth: 1, marginTop: 5}}></View>
+      <View style={{ minHeight: 40 }}>
+        <View style={{ borderColor: 'black', borderWidth: 1, marginTop: 5 }}></View>
         <Text style={props.textStyle}>{props.item.description}</Text>
       </View>
     </Card>
@@ -128,5 +151,5 @@ export const TaskCard = (props) => {
 
 export const TaskView = (props) => {
   const [state, setState] = useState(props.item.state !== "incomplete" ? { checked: true } : { checked: false });
-  return props.card ? <TaskCard {...props} state={state} stateSetter={setState}/> : <TaskField {...props} state={state} stateSetter={setState}/>;
+  return props.card ? <TaskCard {...props} state={state} stateSetter={setState} /> : <TaskField {...props} state={state} stateSetter={setState} />;
 }

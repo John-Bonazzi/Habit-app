@@ -101,7 +101,7 @@ const TaskViewer = ({ route, navigation }) => {
   return (
 
     <View style={theme.container}>
-      <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} buttonColor={theme.myColors.buttonIcon}/>
+      <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} titleSize={26} buttonColor={theme.myColors.buttonIcon}/>
       <FlatList 
         keyExtractor={(item) => item.id}
         data={tasks.filter(displayFilter)}
