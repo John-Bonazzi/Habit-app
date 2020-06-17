@@ -3,8 +3,8 @@ import {View, Text} from 'react-native';
 import { CheckBox, Button, Card } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons'; 
 import { FloatingAction } from "react-native-floating-action";
-import { useNavigation, useTheme } from '@react-navigation/native';
-import {deleteTask} from '../database/fb-tasks';
+import { useNavigation, useTheme, useRoute } from '@react-navigation/native';
+import {deleteTask, updateTask} from '../database/fb-tasks';
 
 
 const defineActions = (style) => {
@@ -83,7 +83,10 @@ export const TaskField = (props) => {
           deleteTask(props.item);
         }
         else if(props.pressMode ==='default'){
+          
           setState({ checked: !state.checked });
+          let newTask = {...props.item, state: !state.checked ? 'completed' : 'incomplete'}; //using not because the new value has not been assigned yet
+          updateTask(newTask);
         }
       }}
       containerStyle={{ flex: 1, backgroundColor: props.bColor, borderRadius: 15, overflow: 'hidden',}}
