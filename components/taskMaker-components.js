@@ -30,6 +30,8 @@ export const DatePicker = (props) => {
       <TouchableOpacity onPress={() => {Keyboard.dismiss(); props.showSetter(!props.show)}}>  
         <Input 
           editable={false}
+          inputContainerStyle={{marginRight: 30}}
+          containerStyle={{marginLeft: 15}}
           label="Select date"
           value={date.toLocaleDateString()}
         />

@@ -112,7 +112,8 @@ const TaskViewer = ({ route, navigation }) => {
             card={theme.card} 
             item={item}
             bColor={theme.myColors.cards} 
-            textStyle={{color: theme.myColors.text}}  
+            titleStyle={{color: theme.colors.text}}  
+            textStyle={{color: theme.colors.text}}  
             failed={false} 
             completed={true}
             pressMode={pressMode}

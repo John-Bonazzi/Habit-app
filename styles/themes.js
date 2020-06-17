@@ -2,21 +2,28 @@ import { useTheme } from "@react-navigation/native";
 
 export const lightTheme = {
   myColors: {
-    button: 'grey',
+    button: '#B95411',
+    newButton: '#9ABA23',
+    editButton: '#23B2BA',
+    deleteButton: '#7D07BA',
     buttonIcon: 'red',
     text: 'black',
-    cards: 'grey',
-    header: 'green',
+    cards: '#944C1C',
+    header: '#B95411',
   }
 }
 
 export const darkTheme = {
   myColors: {
-    button: 'grey',
+    button: '#B95411',
+    newButton: '#9ABA23',
+    editButton: '#23B2BA',
+    deleteButton: '#7D07BA',
     buttonIcon: 'black',
-    text: 'red',
-    cards: 'white',
-    header: 'grey',
+    text: 'black',
+    subText: '#79979C',
+    cards: 'grey',
+    header: '#B95411',
   }
 }
 

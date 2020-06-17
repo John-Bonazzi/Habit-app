@@ -11,21 +11,21 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 const defineActions = (style) => {
   return [
     {
-      color: 'grey',
+      color:'#9ABA23',
       text: 'New',
       icon: <Feather name="plus" size={24} color="white" />,
       name: 'bt_new',
       position: 3
     },
     {
-      color: 'grey',
+      color: '#23B2BA',
       text: 'Edit',
       icon: <Feather name="edit-3" size={24} color="white" />,
       name: 'bt_edit',
       position: 2,
     },
     {
-      color: 'grey',
+      color: '#7D07BA',
       text: 'Delete',
       icon: <Feather name="trash-2" size={24} color="white" />,
       name: 'bt_delete',
@@ -74,7 +74,7 @@ export const TaskField = (props) => {
     <View style={{ flexDirection: 'row' }}>
       <CheckBox
         title={props.item.title}
-        textStyle={props.textStyle}
+        textStyle={props.titleStyle}
         checked={props.state.checked}
         onPress={() => {
           if (props.pressMode === 'edit') {
@@ -103,7 +103,7 @@ export const TaskCard = (props) => {
   return (
 
     <Card
-      containerStyle={{borderRadius: 20, backgroundColor: props.bColor}}
+      containerStyle={{borderRadius: 20, borderWidth: 0,backgroundColor: props.bColor}}
       title={TaskField(props)}
     >
       <TouchableOpacity
@@ -119,20 +119,11 @@ export const TaskCard = (props) => {
           <View></View>}
       </TouchableOpacity>
       <View style={{minHeight: 40}}>
-        <View style={{borderColor: props.textStyle, borderWidth: 1, marginTop: 5}}></View>
+        <View style={{borderColor: 'black', borderWidth: 1, marginTop: 5}}></View>
         <Text style={props.textStyle}>{props.item.description}</Text>
       </View>
     </Card>
   )
-}
-export const RenderTask = () => {
-  const props = {
-    card: theme.card,
-    bColor: theme.myColors.cards,
-    textStyle: { color: theme.myColors.text },
-    item: item
-  };
-  return props.card ? TaskCard(props) : TaskField(props);
 }
 
 export const TaskView = (props) => {

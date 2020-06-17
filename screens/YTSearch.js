@@ -11,7 +11,6 @@ const YTSearch = ({route, navigation}) => {
   const [videos, setVideos] = useState([]);
   useEffect(() => {
     if (route.params?.search){
-      console.log("At YTSearch, search parameter: ", route.params.search);
       getVideos(route.params.search, (data) =>{
         setVideos(data.items);
       })
@@ -48,8 +47,10 @@ const YTSearch = ({route, navigation}) => {
         }}
       >
         <ListItem
+          containerStyle={{backgroundColor: theme.colors.border, borderRadius: 10, marginVertical: 5, marginHorizontal: 10}}
           key={index}
           title={item.snippet.title}
+          titleStyle={{color: theme.colors.text}}
           leftElement={item.snippet.title ?
             <Image 
               source={{uri: item.snippet.thumbnails.default.url}}

@@ -4,7 +4,7 @@ import { Text, View, TouchableOpacity, Keyboard, TouchableWithoutFeedback, Scrol
 import { Styles } from '../styles/themes';
 import { HabitHeader } from '../components/header-components';
 import { Input, Button } from 'react-native-elements';
-
+import { Entypo } from '@expo/vector-icons'; 
 import { DatePicker } from '../components/taskMaker-components';
 
 const TaskMaker = ({ route, navigation }) => {
@@ -27,6 +27,7 @@ const TaskMaker = ({ route, navigation }) => {
   }
 
   useEffect(() => {
+    setSearch('');
     if (route.params.task) {
       setShow(false);
       let task = route.params.task;
@@ -53,84 +54,98 @@ const TaskMaker = ({ route, navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={{flex: 1}}>
-      <ScrollView>
-        <View style={theme.container}>
-          <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} buttonColor={theme.myColors.buttonIcon} />
-          <Input
-            onFocus={() => { setShow(false) }}
-            label='Title'
-            inputStyle={{ color: theme.colors.text }}
-            value={task?.title}
-            onChangeText={val => modifyTask({ title: val })}
-          />
-          <Input
-            onFocus={() => { setShow(false); }}
-            label='Description (optional)'
-            inputStyle={{ color: theme.colors.text }}
-            value={task?.description}
-            onChangeText={val => modifyTask({ description: val })}
-            multiline
-            textAlignVertical='center'
-          />
-          <Input
-            onFocus={() => { setShow(false); }}
-            label='YouTube search term'
-            inputStyle={{ color: theme.colors.text }}
-            value={search}
-            onChangeText={val => setSearch(val)}
-            multiline
-            textAlignVertical='center'
-          />
-          <TouchableOpacity
-            onPress={() => task.video ? navigation.navigate('Viewer', { video: task.video }) : {}}
-          >
+      <View style={{ flex: 1 }}>
+        <ScrollView>
+          <View style={theme.container}>
+            <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} buttonColor={theme.myColors.buttonIcon} />
+            <Input
+              onFocus={() => { setShow(false) }}
+              inputContainerStyle={{marginRight: 30}}
+              containerStyle={{marginLeft: 15}}
+              label='Title'
+              inputStyle={{ color: theme.colors.text}}
+              value={task?.title}
+              onChangeText={val => modifyTask({ title: val })}
+            />
             <Input
               onFocus={() => { setShow(false); }}
-              disabled
-              onPress={() => task.video ? navigation.navigate('Viewer', { video: task.video }) : {}}
-              label='Link From YouTube video'
-              disabledInputStyle={{ color: theme.colors.text }}
-              value={`youtube.com/watch?v=${task.video?.id?.videoId ? task.video.id.videoId : ''}`}
+              label='Description (optional)'
+              inputContainerStyle={{marginRight: 30}}
+              containerStyle={{marginLeft: 15}}
+              inputStyle={{ color: theme.colors.text }}
+              value={task?.description}
+              onChangeText={val => modifyTask({ description: val })}
               multiline
               textAlignVertical='center'
             />
-          </TouchableOpacity>
-          <Button
-            title='Search'
-            onPress={() => navigation.navigate('Search', { search: search })}
-          />
-          <DatePicker
-            selectedStartDate={task?.due_date}
-            setter={modifyTask}
-            show={show}
-            showSetter={setShow}
-          />
+            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+              <Input
+                onFocus={() => { setShow(false); }}
+                label='YouTube search term'
+                containerStyle={{flex: 1, marginLeft: 15}}
+                inputStyle={{ color: theme.colors.text}}
+                value={search}
+                onChangeText={val => setSearch(val)}
+                multiline
+                textAlignVertical='center'
+              />
+              <Button
+                containerStyle={{alignSelf: 'center', borderRadius: 30, marginRight: 15}}
+                buttonStyle={{width: 100, backgroundColor: theme.myColors.button}}
+                icon={<Entypo name="chevron-right" size={22} color={theme.colors.text} />}
+                iconRight
+                title='Search'
+                titleStyle={{color: theme.colors.text}}
+                onPress={() => navigation.navigate('Search', { search: search })}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={() => task.video ? navigation.navigate('Viewer', { video: task.video }) : {}}
+            >
+              <Input
+                onFocus={() => { setShow(false); }}
+                disabled
+                onPress={() => task.video ? navigation.navigate('Viewer', { video: task.video }) : {}}
+                inputContainerStyle={{marginRight: 30}}
+                containerStyle={{marginLeft: 15}}
+                label='Link From YouTube video'
+                disabledInputStyle={{ color: theme.colors.text, opacity: 1 }}
+                value={`youtube.com/watch?v=${task.video?.id?.videoId ? task.video.id.videoId : ''}`}
+                multiline
+                textAlignVertical='center'
+              />
+            </TouchableOpacity>
+            <DatePicker
+              selectedStartDate={task?.due_date}
+              setter={modifyTask}
+              show={show}
+              showSetter={setShow}
+            />
+          </View>
+        </ScrollView>
+        <View style={{ marginBottom: 20 }} >
+          <View style={{ flexDirection: 'row', alignContent: 'space-around', justifyContent: 'space-around' }}>
+            <Button
+              title="save"
+              titleStyle={{ color: theme.colors.text }}
+              buttonStyle={{ width: 100, backgroundColor: theme.myColors.newButton, borderRadius: 20 }}
+              onPress={() => {
+                console.log("At taskMaker, save button: ", task);
+                console.log("At taskMaker, save button mode: ", mode);
+                setShow(false);
+                let newTask = task;
+                setTask({});
+                navigation.navigate("Home", { task: newTask, mode: 'default', editMode: mode });
+              }}
+            />
+            <Button
+              title="Clear"
+              titleStyle={{ color: theme.colors.text }}
+              buttonStyle={{ width: 100, backgroundColor: theme.myColors.deleteButton, borderRadius: 20 }}
+              onPress={() => { setTask({}); setShow(false) }}
+            />
+          </View>
         </View>
-      </ScrollView>
-      <View style={{marginBottom: 20}} >
-        <View style={{ flexDirection: 'row', alignContent: 'space-around', justifyContent: 'space-around'}}>
-        <Button
-          title="save"
-          titleStyle={{color: theme.colors.text}}
-          buttonStyle={{width: 100, backgroundColor: theme.colors.border, borderRadius: 20}}
-          onPress={() => {
-            console.log("At taskMaker, save button: ", task);
-            console.log("At taskMaker, save button mode: ", mode);
-            setShow(false);
-            let newTask = task;
-            setTask({});
-            navigation.navigate("Home", { task: newTask, mode: 'default', editMode: mode });
-          }}
-        />
-        <Button
-          title="Clear"
-          titleStyle={{color: theme.colors.text}}
-          buttonStyle={{width: 100, backgroundColor: theme.colors.border, borderRadius: 20}}
-          onPress={() => { setTask({}); setShow(false) }}
-        />
-      </View>
-      </View>
       </View>
     </TouchableWithoutFeedback>
   )
