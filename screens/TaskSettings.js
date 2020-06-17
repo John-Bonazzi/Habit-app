@@ -14,7 +14,6 @@ const TaskSettings = ({ route, navigation }) => {
   return (
     <View style={theme.container}>
       <HabitHeader backgroundColor={theme.myColors.header} title='Settings' titleSize={40} buttonColor={theme.myColors.buttonIcon}/>
-      <Text style={{color: theme.myColors.text}}>Change settings</Text>
       <OptionSelector
         title='Theme' 
         condition={theme.dark} 
@@ -23,6 +22,7 @@ const TaskSettings = ({ route, navigation }) => {
         saver={save_theme}
         options={['dark', 'light']}
         vals={[{...DarkTheme, ...darkTheme }, {...DefaultTheme, ...lightTheme}]}
+        theme={theme}
         />
       <OptionSelector 
         title='Cards'
@@ -32,6 +32,7 @@ const TaskSettings = ({ route, navigation }) => {
         saver={save_card_style}
         options={['true', 'false']}
         vals={[{...Styles, card: true}, {...Styles, card: false}]}
+        theme={theme}
       />
     </View>
   )

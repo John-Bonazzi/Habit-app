@@ -3,6 +3,7 @@ import { useTheme } from "@react-navigation/native";
 export const lightTheme = {
   myColors: {
     button: '#B95411',
+    optionButton: '#9ABA23',
     newButton: '#9ABA23',
     editButton: '#23B2BA',
     deleteButton: '#7D07BA',
@@ -16,6 +17,7 @@ export const lightTheme = {
 export const darkTheme = {
   myColors: {
     button: '#B95411',
+    optionButton: '#7D07BA',
     newButton: '#9ABA23',
     editButton: '#23B2BA',
     deleteButton: '#7D07BA',
