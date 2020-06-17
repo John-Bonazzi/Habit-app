@@ -21,7 +21,7 @@ const HeaderHomeButton = (props) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Home')} >
+      onPress={() => navigation.navigate('Home', {mode: 'default'})} >
       <MaterialIcons name="home" size={24} color={props.buttonColor} />
     </TouchableOpacity>
   )

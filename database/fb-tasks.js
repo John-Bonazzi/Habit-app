@@ -17,7 +17,7 @@ export function updateTask(task) {
   firebase.database().ref(`Habit/${key}`).set(task);
 }
 
-export function deleteReminder(storeTask) {
+export function deleteTask(task) {
   firebase.database().ref(`Habit/${task.id}`).remove();
 }
 

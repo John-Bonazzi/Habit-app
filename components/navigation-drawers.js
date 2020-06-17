@@ -11,7 +11,7 @@ export const HabitDrawer = (props) => {
       <DrawerItem
         label='Home'
         focused={index === 0}
-        onPress={() => { props.navigation.navigate('Home'); }} />
+        onPress={() => { props.navigation.navigate('Home', {mode: 'default'}); }} />
       <DrawerItem
         label='Settings'
         focused={index === 2}

@@ -9,7 +9,6 @@ export const load_theme = async (updateTheme) => {
   var option = await task_style();
   var newTheme = themeOption==='dark' ? {...Styles ,...DarkTheme, ...darkTheme} : {...Styles ,...DefaultTheme, ...lightTheme};
   newTheme = {...newTheme, card: option};
-  console.log("At loader, load_theme: ", newTheme);
   makeTheme(newTheme);
   updateTheme(newTheme);
 }
