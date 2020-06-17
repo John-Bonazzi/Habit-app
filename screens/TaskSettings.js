@@ -13,7 +13,7 @@ const TaskSettings = ({ route, navigation }) => {
   const theme = useTheme();
   return (
     <View style={theme.container}>
-      <HabitHeader backgroundColor={theme.myColors.header} buttonColor={theme.myColors.buttonIcon}/>
+      <HabitHeader backgroundColor={theme.myColors.header} title='Settings' titleSize={40} buttonColor={theme.myColors.buttonIcon}/>
       <Text style={{color: theme.myColors.text}}>Change settings</Text>
       <OptionSelector
         title='Theme' 

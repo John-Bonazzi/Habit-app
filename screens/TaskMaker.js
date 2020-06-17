@@ -9,7 +9,8 @@ import { DatePicker } from '../components/taskMaker-components';
 
 const TaskMaker = ({ route, navigation }) => {
   const theme = useTheme();
-  const [mode, setMode] = useState({mode: 'default'});
+  const [headerTitle, setHeaderTitle] = useState('Create')
+  const [mode, setMode] = useState({ mode: 'default' });
   const [search, setSearch] = useState('');
   const [task, setTask] = useState({
     title: '',
@@ -26,32 +27,38 @@ const TaskMaker = ({ route, navigation }) => {
 
   const [show, setShow] = useState(false);
 
-  useEffect(() =>{
-    if(route.params?.task){
+  useEffect(() => {
+    if (route.params.task) {
       let task = route.params.task;
       setTask({
-        title: task.title,
-        description: task.description,
+        title: task.title ? task.title : '',
+        description: task.description ? task.description : '',
         video: task.video ? task.video : {},
-        due_date: new Date(task.dates.due_date).toString(),
+        due_date: task.dates?.due_date ? new Date(task.dates.due_date).toString() : new Date().toString(),
       });
-      setMode({mode: 'edit', key: route.params.task.id});
+      if(route.params.edit){
+      setMode({ mode: 'edit', key: route.params.task.id });
+      setHeaderTitle('Edit');
+      }
+      else {
+        setMode('default');
+        setHeaderTitle('Create');
+      }
     }
-    else{
-      setMode('default');
+    
+    if (route.params.video) {
+      modifyTask({ video: route.params.video });
     }
-    if(route.params?.video){
-      modifyTask({video: route.params.video});
-    }
-  }, [route.params?.task, route.params?.video]);
+  }, [route.params.task, route.params.video, route.params.edit]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={theme.container}>
-      <HabitHeader backgroundColor={theme.myColors.header} buttonColor={theme.myColors.buttonIcon}/>
+        <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} buttonColor={theme.myColors.buttonIcon} />
         <Input
           onFocus={() => { setShow(false) }}
           label='Title'
+          inputStyle={{ color: theme.colors.text }}
           value={task?.title}
           onChangeText={val => modifyTask({ title: val })}
         />
@@ -71,17 +78,22 @@ const TaskMaker = ({ route, navigation }) => {
           multiline
           textAlignVertical='center'
         />
-        <Input
-          onFocus={() => { setShow(false); }}
-          disabled
-          label='Link From YouTube video'
-          value={`youtube.com/watch?v=${task.video?.id?.videoId ? task.video.id.videoId : ''}`}
-          multiline
-          textAlignVertical='center'
-        />
+        <TouchableOpacity
+          onPress={() => task.video ? navigation.navigate('Viewer', { video: task.video }) : {}}
+        >
+          <Input
+            onFocus={() => { setShow(false); }}
+            disabled
+            onPress={() => task.video ? navigation.navigate('Viewer', { video: task.video }) : {}}
+            label='Link From YouTube video'
+            value={`youtube.com/watch?v=${task.video?.id?.videoId ? task.video.id.videoId : ''}`}
+            multiline
+            textAlignVertical='center'
+          />
+        </TouchableOpacity>
         <Button
           title='Search'
-          onPress={() =>navigation.navigate('Search', {search: search})}
+          onPress={() => navigation.navigate('Search', { search: search })}
         />
         <DatePicker
           selectedStartDate={task?.due_date}
@@ -91,13 +103,13 @@ const TaskMaker = ({ route, navigation }) => {
         />
         <Button
           title="save"
-          onPress={() => { 
-            console.log("At taskMaker, save button: ", task); 
+          onPress={() => {
+            console.log("At taskMaker, save button: ", task);
             console.log("At taskMaker, save button mode: ", mode);
             setShow(false);
             let newTask = task;
             setTask({});
-            navigation.navigate("Home", {task: newTask, mode:'default', editMode: mode});
+            navigation.navigate("Home", { task: newTask, mode: 'default', editMode: mode });
           }}
         />
         <Button

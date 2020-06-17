@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { getVideos } from '../api/YTServer';
 import { View, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { ListItem, Image } from 'react-native-elements';
+import { ListItem, Image,Button } from 'react-native-elements';
+import { useTheme } from '@react-navigation/native';
 
 
 
 const YTSearch = ({route, navigation}) => {
+  const theme = useTheme();
   const [videos, setVideos] = useState([]);
   useEffect(() => {
     if (route.params?.search){
@@ -15,6 +17,20 @@ const YTSearch = ({route, navigation}) => {
     }
   }, [route.params?.search]
   )
+
+  const RenderError = () => {
+    return(
+      <View style={{flex:1, alignContent: 'center', justifyContent: 'center', backgroundColor: theme.colors.background}}>
+        <Text style={{ fontSize: 50, textAlign: 'center', textAlignVertical: 'center', color: theme.colors.text}}>No results</Text>
+        <Button  
+          title={'Go Back'} 
+          titleStyle={{color: theme.colors.text}}
+          buttonStyle={{width: 150, backgroundColor: theme.colors.border}} 
+          containerStyle={{alignSelf: 'center'}} 
+          onPress={() => navigation.goBack()}/>
+      </View>
+    )
+  }
 
   const renderVideo = ({index, item}) =>{
     return(
@@ -29,11 +45,11 @@ const YTSearch = ({route, navigation}) => {
         <ListItem
           key={index}
           title={item.snippet.title}
-          leftElement={
+          leftElement={item.snippet.title ?
             <Image 
               source={{uri: item.snippet.thumbnails.default.url}}
               style={{width: 100, height: 55 }}
-            />
+            /> : <Text>No results</Text>
           }
         />
       </TouchableOpacity>
@@ -42,13 +58,15 @@ const YTSearch = ({route, navigation}) => {
 
   return (
     <View style={styles.screen} >
+      {videos.length ?
       <FlatList 
         data={videos}
         keyExtractor={(item) => item.id.videoId}
         extraData={videos}
         renderItem={renderVideo}
 
-      />
+      /> : <RenderError />
+      }
     </View>
   );
 }

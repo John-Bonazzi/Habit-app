@@ -37,6 +37,7 @@ const createTaskPacket = (task) => {
 
 const TaskViewer = ({ route, navigation }) => {
   const theme = useTheme();
+  const [headerTitle, setHeaderTitle] = useState('View all')
   const [tasks, setTasks] = useState([]);
   const [pressMode, setMode] = useState(route.params.mode);
   const [display, setDisplay] = useState('all');
@@ -63,6 +64,9 @@ const TaskViewer = ({ route, navigation }) => {
 
   useEffect(() => {
     if (route.params?.task){
+      if(route.params.task === {}){
+        console.log("Empty!");}
+      else{
       let newTask = createTaskPacket(route.params.task);
       if(route.params?.editMode.mode === 'edit'){
         updateTask({...newTask, id: route.params.editMode.key});
@@ -70,11 +74,18 @@ const TaskViewer = ({ route, navigation }) => {
       else{
         storeTask(newTask);
       }
-    }
+    }}
     if (route.params?.mode){
       setMode(route.params.mode);
     }
     if (route.params?.filter){
+      if(route.params.filter === 'all'){
+        setHeaderTitle('View all');
+      } else if (route.params.filter === 'incomplete'){
+        setHeaderTitle('View incomplete');
+      } else if (route.params.filter === 'completed'){
+        setHeaderTitle('View completed');
+      }
       setDisplay(route.params?.filter);
     }
   }, [route.params?.task, route.params, route.params?.filter]);
@@ -90,7 +101,7 @@ const TaskViewer = ({ route, navigation }) => {
   return (
 
     <View style={theme.container}>
-      <HabitHeader backgroundColor={theme.myColors.header} buttonColor={theme.myColors.buttonIcon}/>
+      <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} buttonColor={theme.myColors.buttonIcon}/>
       <FlatList 
         keyExtractor={(item) => item.id}
         data={tasks.filter(displayFilter)}
@@ -111,6 +122,7 @@ const TaskViewer = ({ route, navigation }) => {
       <FloatingButton 
         buttonStyle={{color: theme.myColors.button}}
         setter={setMode}
+        headerSetter={setHeaderTitle}
       />
     </View>
   )

@@ -44,7 +44,7 @@ export const FloatingButton = (props) => {
       actions={actions}
       onPressItem={name => {
         if (name === 'bt_new')
-          navigation.navigate("Create");
+          navigation.navigate("Create", {task: {}, edit: false});
         else if (name === 'bt_edit')
           setMode('edit');
         else if (name === 'bt_delete')
@@ -77,7 +77,7 @@ export const TaskField = (props) => {
         checked={state.checked}
         onPress={() => {
           if (props.pressMode === 'edit') {
-            navigation.navigate("Create", { task: props.item });
+            navigation.navigate("Create", { task: props.item, edit: true });
           }
           else if (props.pressMode === 'delete') {
             deleteTask(props.item);
