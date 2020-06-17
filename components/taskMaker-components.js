@@ -1,17 +1,24 @@
 import React, {useState} from 'react';
 import { TouchableHighlight, View,TouchableOpacity, Keyboard } from 'react-native';
-import { Input } from 'react-native-elements';
+import { Input, ThemeConsumer } from 'react-native-elements';
 import CalendarPicker from 'react-native-calendar-picker';
+import { useTheme } from '@react-navigation/native';
 
 const Calendar = (props) => {
+  const theme = useTheme()
   if(!props.showCalendar){
     return (<View/>);
   }
   else{
     return(
+      <View style={{backgroundColor: theme.colors.background}}>
       <CalendarPicker
-        onDateChange={value => {props.setter({due_date: new Date(value).toString()})}}  
+        onDateChange={value => {props.setter({due_date: new Date(value).toString()})}}
+        selectedDayTextColor='black'
+        textStyle={{color: theme.colors.text}}
+        selectedDayColor={theme.colors.primary}
       />
+      </View>
     )
   }
 }

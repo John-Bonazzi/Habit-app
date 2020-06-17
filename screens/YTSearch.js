@@ -11,9 +11,13 @@ const YTSearch = ({route, navigation}) => {
   const [videos, setVideos] = useState([]);
   useEffect(() => {
     if (route.params?.search){
+      console.log("At YTSearch, search parameter: ", route.params.search);
       getVideos(route.params.search, (data) =>{
         setVideos(data.items);
       })
+    }
+    else{
+      setVideos([]);
     }
   }, [route.params?.search]
   )
@@ -40,6 +44,7 @@ const YTSearch = ({route, navigation}) => {
         }}
         onPress={() => {
           navigation.navigate('Create', {video: item});
+          setVideos([]);
         }}
       >
         <ListItem

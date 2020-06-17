@@ -12,6 +12,7 @@ const TaskMaker = ({ route, navigation }) => {
   const [headerTitle, setHeaderTitle] = useState('Create')
   const [mode, setMode] = useState({ mode: 'default' });
   const [search, setSearch] = useState('');
+  const [show, setShow] = useState(false);
   const [task, setTask] = useState({
     title: '',
     description: '',
@@ -25,10 +26,9 @@ const TaskMaker = ({ route, navigation }) => {
     });
   }
 
-  const [show, setShow] = useState(false);
-
   useEffect(() => {
     if (route.params.task) {
+      setShow(false);
       let task = route.params.task;
       setTask({
         title: task.title ? task.title : '',
@@ -65,6 +65,7 @@ const TaskMaker = ({ route, navigation }) => {
         <Input
           onFocus={() => { setShow(false); }}
           label='Description (optional)'
+          inputStyle={{ color: theme.colors.text }}
           value={task?.description}
           onChangeText={val => modifyTask({ description: val })}
           multiline
@@ -73,6 +74,7 @@ const TaskMaker = ({ route, navigation }) => {
         <Input
           onFocus={() => { setShow(false); }}
           label='YouTube search term'
+          inputStyle={{ color: theme.colors.text }}
           value={search}
           onChangeText={val => setSearch(val)}
           multiline
@@ -86,6 +88,7 @@ const TaskMaker = ({ route, navigation }) => {
             disabled
             onPress={() => task.video ? navigation.navigate('Viewer', { video: task.video }) : {}}
             label='Link From YouTube video'
+            disabledInputStyle={{ color: theme.colors.text }}
             value={`youtube.com/watch?v=${task.video?.id?.videoId ? task.video.id.videoId : ''}`}
             multiline
             textAlignVertical='center'
