@@ -88,11 +88,10 @@ export default function App() {
     >
       <Drawer.Navigator initialRouteName='Home' drawerContent={HabitDrawer}>
         <Drawer.Screen name='Home' component={TaskViewer} initialParams={{mode:'default'}}></Drawer.Screen>
+        <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{ setter: updateTheme}} ></Drawer.Screen>
         <Drawer.Screen name='Create' component={TaskMaker} ></Drawer.Screen>
         <Drawer.Screen name='Search' component={YTSearch} ></Drawer.Screen>
         <Drawer.Screen name='Viewer' component={YTViewer} ></Drawer.Screen>
-
-        <Drawer.Screen name='Settings' component={TaskSettings} initialParams={{ setter: updateTheme}} ></Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>
   );

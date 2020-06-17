@@ -10,6 +10,12 @@ import { Feather } from '@expo/vector-icons';
 import {Accelerometer} from 'expo-sensors';
 import { setupHabitListener, storeTask, initHabitDB, updateTask } from '../database/fb-tasks';
 
+const displaySort = (item1, item2) => {
+  return Date(item1.dates.due_date) < Date(item2.dates.due_date);
+}
+
+
+
 const createTaskPacket = (task) => {
   let creationTime = new Date().toString();
   let newTask = {
@@ -33,6 +39,7 @@ const TaskViewer = ({ route, navigation }) => {
   const theme = useTheme();
   const [tasks, setTasks] = useState([]);
   const [pressMode, setMode] = useState(route.params.mode);
+  const [display, setDisplay] = useState('all');
   var _sensor_subscription;
   Accelerometer.setUpdateInterval(300);
   useEffect(() => {
@@ -42,7 +49,9 @@ const TaskViewer = ({ route, navigation }) => {
     catch(err){
       console.log("Error at TaskViewer: ", err);
     }
-    setupHabitListener(setTasks);
+    setupHabitListener((items) => {
+      setTasks(items.sort(displaySort));
+    });
     _sensor_subscription = Accelerometer.addListener(accelerometerData => {    
       let {x} = accelerometerData;
       if(x > 1.5){
@@ -65,14 +74,26 @@ const TaskViewer = ({ route, navigation }) => {
     if (route.params?.mode){
       setMode(route.params.mode);
     }
-  }, [route.params?.task, route.params]);
+    if (route.params?.filter){
+      setDisplay(route.params?.filter);
+    }
+  }, [route.params?.task, route.params, route.params?.filter]);
+
+  const displayFilter = (item) => {
+    if(display==='all'){
+      return true;
+    } else{
+      return item.state === display;
+    }
+  }
+
   return (
 
     <View style={theme.container}>
       <HabitHeader backgroundColor={theme.myColors.header} buttonColor={theme.myColors.buttonIcon}/>
       <FlatList 
         keyExtractor={(item) => item.id}
-        data={tasks}
+        data={tasks.filter(displayFilter)}
         extraData={theme}
         renderItem={({index, item}) => 
           { //console.log('At flatlist, item: ', item);

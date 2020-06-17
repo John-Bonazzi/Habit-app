@@ -2,7 +2,8 @@ import {
   DrawerContentScrollView,
   DrawerItem
 } from '@react-navigation/drawer';
-import React from 'react';
+import { Feather, FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
+import React, { useState } from 'react';
 
 export const HabitDrawer = (props) => {
   const index = props.state.index;
@@ -10,12 +11,30 @@ export const HabitDrawer = (props) => {
     <DrawerContentScrollView {...props}>
       <DrawerItem
         label='Home'
+        icon={({color, size}) =><FontAwesome5 name="tasks" size={size} color={color} />}
+        labelStyle={{textAlign: 'right', justifyContent: 'flex-end'}}
         focused={index === 0}
-        onPress={() => { props.navigation.navigate('Home', {mode: 'default'}); }} />
+        onPress={() => { props.navigation.navigate('Home', {mode: 'default', filter: 'all'}); }}
+      />
+      <DrawerItem
+        label='Incomplete'
+        icon={({color, size}) => <MaterialIcons name="subdirectory-arrow-right" size={size} color={color} />}
+        labelStyle={{textAlign: 'right', justifyContent: 'flex-end', alignContent: 'center', marginLeft: 15}}
+        onPress={({focused}) => {focused = true; props.navigation.navigate('Home', {mode: 'default', filter: 'incomplete'}); }}
+      />
+      <DrawerItem
+        label='Completed'
+        icon={({color, size}) => <MaterialIcons name="subdirectory-arrow-right" size={size} color={color} />}
+        labelStyle={{textAlign: 'right', justifyContent: 'flex-end', alignContent: 'center', marginLeft: 15}}
+        onPress={() => {props.navigation.navigate('Home', {mode: 'default', filter: 'completed'}); }}
+      />
       <DrawerItem
         label='Settings'
-        focused={index === 2}
-        onPress={() => { props.navigation.navigate('Settings') }} />
+        icon={({color, size}) => <Feather name="settings" size={size} color={color}/>}
+        focused={index === 1}
+        onPress={() => { props.navigation.navigate('Settings') }} 
+        labelStyle={{textAlign: 'right', justifyContent: 'flex-end'}}
+      />
     </DrawerContentScrollView>
   )
 }
