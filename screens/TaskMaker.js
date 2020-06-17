@@ -65,7 +65,7 @@ const TaskMaker = ({ route, navigation }) => {
         />
         <Input
           onFocus={() => { setShow(false); }}
-          label='Link to Youtube video'
+          label='YouTube search term'
           value={search}
           onChangeText={val => setSearch(val)}
           multiline
@@ -74,7 +74,7 @@ const TaskMaker = ({ route, navigation }) => {
         <Input
           onFocus={() => { setShow(false); }}
           disabled
-          label='Link From VIDEO'
+          label='Link From YouTube video'
           value={`youtube.com/watch?v=${task.video?.id?.videoId ? task.video.id.videoId : ''}`}
           multiline
           textAlignVertical='center'
