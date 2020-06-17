@@ -5,6 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import { FloatingAction } from "react-native-floating-action";
 import { useNavigation, useTheme, useRoute } from '@react-navigation/native';
 import { deleteTask, updateTask } from '../database/fb-tasks';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 
 const defineActions = (style) => {
@@ -68,13 +69,13 @@ const taskCompletedIcon = () => {
 
 export const TaskField = (props) => {
   const navigation = useNavigation();
-  const [state, setState] = useState(props.item.state !== "incomplete" ? { checked: true } : { checked: false });
+  const setState = props.stateSetter;
   return (
     <View style={{ flexDirection: 'row' }}>
       <CheckBox
         title={props.item.title}
         textStyle={props.textStyle}
-        checked={state.checked}
+        checked={props.state.checked}
         onPress={() => {
           if (props.pressMode === 'edit') {
             navigation.navigate("Create", { task: props.item, edit: true });
@@ -83,13 +84,12 @@ export const TaskField = (props) => {
             deleteTask(props.item);
           }
           else if (props.pressMode === 'default') {
-
-            setState({ checked: !state.checked });
-            let newTask = { ...props.item, state: !state.checked ? 'completed' : 'incomplete' }; //using not because the new value has not been assigned yet
+            setState({ checked: !props.state.checked });
+            let newTask = { ...props.item, state: !props.state.checked ? 'completed' : 'incomplete' }; //using not because the new value has not been assigned yet
             updateTask(newTask);
-          }
-        }}
-        containerStyle={{ flex: 1, backgroundColor: props.bColor, borderRadius: 15, overflow: 'hidden', }}
+          }}
+        }
+        containerStyle={{ flex: 1, backgroundColor: props.bColor, borderRadius: 15, overflow: 'hidden', borderColor: props.bColor }}
         checkedIcon={props.item.state === 'failed' ? taskFailedIcon() : taskCompletedIcon()}
         uncheckedIcon={<Feather name="circle" size={24} color="black" />}
       />
@@ -98,14 +98,17 @@ export const TaskField = (props) => {
 }
 
 export const TaskCard = (props) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const setState = props.stateSetter;
   return (
+
     <Card
+      containerStyle={{borderRadius: 20, backgroundColor: props.bColor}}
       title={TaskField(props)}
     >
       <TouchableOpacity
         onPress={() =>{
-          navigation.navigate('Viewer', {video: props.item.video});
+            navigation.navigate('Viewer', {video: props.item.video});
         }}
       >
         {props.item.video ?
@@ -115,7 +118,10 @@ export const TaskCard = (props) => {
           /> :
           <View></View>}
       </TouchableOpacity>
-      <Text style={props.textStyle}>{props.item.description}</Text>
+      <View style={{minHeight: 40}}>
+        <View style={{borderColor: props.textStyle, borderWidth: 1, marginTop: 5}}></View>
+        <Text style={props.textStyle}>{props.item.description}</Text>
+      </View>
     </Card>
   )
 }
@@ -130,5 +136,6 @@ export const RenderTask = () => {
 }
 
 export const TaskView = (props) => {
-  return props.card ? TaskCard(props) : TaskField(props);
+  const [state, setState] = useState(props.item.state !== "incomplete" ? { checked: true } : { checked: false });
+  return props.card ? <TaskCard {...props} state={state} stateSetter={setState}/> : <TaskField {...props} state={state} stateSetter={setState}/>;
 }

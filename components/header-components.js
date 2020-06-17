@@ -43,8 +43,10 @@ export const HabitHeader = (props) => {
   const route = useRoute();
   return (
     <Header
-      containerStyle={{ maxHeight: 70, marginBottom: 15 }}
+      style={{shadowOpacity: 0, shadowRadius: 0, shadowOffset: {height: 0, width: 0}, elevation: 0}}
+      containerStyle={{ maxHeight: 70, marginBottom: 15}}
       backgroundColor={props.backgroundColor}
+      barStyle='default'
       centerComponent={<Text adjustsFontSizeToFit style={{ fontSize: props.titleSize, color: props.textColor, marginBottom: 30}}>{props.title}</Text>}
       leftComponent={HeaderMenuButton(props)}
       leftContainerStyle={{ marginHorizontal: 10, marginBottom: 25 }}
