@@ -28,6 +28,7 @@ const TaskMaker = ({ route, navigation }) => {
 
   useEffect(() => {
     setSearch('');
+    console.log(route.params.task)
     if (route.params.task) {
       setShow(false);
       let task = route.params.task;
@@ -57,7 +58,7 @@ const TaskMaker = ({ route, navigation }) => {
       <View style={{ flex: 1 }}>
         <ScrollView>
           <View style={theme.container}>
-            <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} titleSize={40} buttonColor={theme.myColors.buttonIcon} />
+            <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} cleaner={setTask} titleSize={40} buttonColor={theme.myColors.buttonIcon} />
             <Input
               onFocus={() => { setShow(false) }}
               inputContainerStyle={{marginRight: 30}}
@@ -86,7 +87,6 @@ const TaskMaker = ({ route, navigation }) => {
                 inputStyle={{ color: theme.colors.text}}
                 value={search}
                 onChangeText={val => setSearch(val)}
-                multiline
                 textAlignVertical='center'
               />
               <Button
@@ -142,7 +142,7 @@ const TaskMaker = ({ route, navigation }) => {
               title="Clear"
               titleStyle={{ color: theme.colors.text }}
               buttonStyle={{ width: 100, backgroundColor: theme.myColors.deleteButton, borderRadius: 20 }}
-              onPress={() => { setTask({}); setShow(false) }}
+              onPress={() => { setTask({}); setShow(false); setSearch('') }}
             />
           </View>
         </View>

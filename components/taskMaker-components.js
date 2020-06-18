@@ -24,12 +24,14 @@ const Calendar = (props) => {
 }
 
 export const DatePicker = (props) => {
-  const date = props.selectedStartDate ? new Date(props.selectedStartDate) : new Date();;
+  const date = props.selectedStartDate ? new Date(props.selectedStartDate) : new Date();
+  const theme = useTheme();
   return(
     <View>
       <TouchableOpacity onPress={() => {Keyboard.dismiss(); props.showSetter(!props.show)}}>  
         <Input 
           editable={false}
+          inputStyle={{ color: theme.colors.text}}
           inputContainerStyle={{marginRight: 30}}
           containerStyle={{marginLeft: 15}}
           label="Select date"
