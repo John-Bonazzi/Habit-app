@@ -48,7 +48,7 @@ export const FloatingButton = (props) => {
       onPressItem={name => {
         if (name === 'bt_new'){
           setToggle({ edit: false, delete: false });
-          navigation.navigate("Create", { task: {}, edit: false });
+          navigation.navigate("Create", { task: null, edit: false });
         }
         else if (name === 'bt_edit') {
           if (!toggle.edit) {

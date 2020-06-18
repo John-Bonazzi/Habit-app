@@ -17,12 +17,15 @@ const HeaderMenuButton = (props) => {
   )
 }
 
-const HeaderHomeButton = (props) => {
+const HeaderHomeButton = (props, theme) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Home', {mode: 'default'})} >
-      <MaterialIcons name="home" size={34} color={props.myColors.newButton} />
+      onPress={() => {
+        props.cleaner ? props.cleaner('') : {};
+        navigation.navigate('Home', {mode: 'default', task: null});
+        }} >
+      <MaterialIcons name="home" size={34} color={theme.myColors.newButton} />
     </TouchableOpacity>
   )
 }
@@ -44,13 +47,13 @@ export const HabitHeader = (props) => {
   const theme = useTheme();
   return (
     <Header
-      containerStyle={{ maxHeight: 70, marginBottom: 15, borderBottomWidth: 0}}
+      containerStyle={{ maxHeight: 80, marginBottom: 15, borderBottomWidth: 0}}
       backgroundColor={props.backgroundColor}
       barStyle='default'
       centerComponent={<Text adjustsFontSizeToFit style={{ fontSize: props.titleSize, color: props.textColor, marginBottom: 30}}>{props.title}</Text>}
       leftComponent={HeaderMenuButton(theme)}
       leftContainerStyle={{ marginHorizontal: 10, marginBottom: 25}}
-      rightComponent={route.name==='Home' ? {} : HeaderHomeButton(theme)}
+      rightComponent={route.name==='Home' ? {} : HeaderHomeButton(props, theme)}
       rightContainerStyle={{ marginHorizontal: 10, marginBottom: 25 }} />
   )
 }

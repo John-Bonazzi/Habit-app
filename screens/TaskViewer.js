@@ -6,8 +6,8 @@ import { Styles } from '../styles/themes';
 import { Button, Header } from 'react-native-elements';
 import { HabitHeader } from '../components/header-components';
 import { FloatingAction } from "react-native-floating-action";
-import { Feather } from '@expo/vector-icons'; 
-import {Accelerometer} from 'expo-sensors';
+import { Feather } from '@expo/vector-icons';
+import { Accelerometer } from 'expo-sensors';
 import { setupHabitListener, storeTask, initHabitDB, updateTask } from '../database/fb-tasks';
 
 const displaySort = (item1, item2) => {
@@ -19,15 +19,15 @@ const displaySort = (item1, item2) => {
 const createTaskPacket = (task) => {
   let creationTime = new Date().toString();
   let newTask = {
-    title: task.title? task.title : 'New Task',
-    description: task.description? task.description : '',
+    title: task.title ? task.title : 'New Task',
+    description: task.description ? task.description : '',
     timer: 0.0,
     state: 'incomplete',
-    video: task.video? task.video : {},
+    video: task.video ? task.video : {},
     dates: {
       created: creationTime,
       last_modified: creationTime,
-      due_date: task.due_date? task.due_date : creationTime,
+      due_date: task.due_date ? task.due_date : creationTime,
     },
   };
   return newTask;
@@ -44,46 +44,46 @@ const TaskViewer = ({ route, navigation }) => {
   var _sensor_subscription;
   Accelerometer.setUpdateInterval(300);
   useEffect(() => {
-    try{
+    try {
       initHabitDB();
     }
-    catch(err){
+    catch (err) {
       console.log("Error at TaskViewer: ", err);
     }
     setupHabitListener((items) => {
       setTasks(items.sort(displaySort));
     });
-    _sensor_subscription = Accelerometer.addListener(accelerometerData => {    
-      let {x} = accelerometerData;
-      if(x > 1.5){
-        
+    _sensor_subscription = Accelerometer.addListener(accelerometerData => {
+      let { x } = accelerometerData;
+      if (x > 1.5) {
+
         navigation.toggleDrawer();
       }
     })
   }, []);
 
   useEffect(() => {
-    if (route.params?.task){
-      if(route.params.task === {}){
-        console.log("Empty!");}
-      else{
-      let newTask = createTaskPacket(route.params.task);
-      if(route.params?.editMode.mode === 'edit'){
-        updateTask({...newTask, id: route.params.editMode.key});
+    if (route.params?.task) {
+      if (route.params.task) {
+        let newTask = createTaskPacket(route.params.task);
+        if (route.params.editMode?.mode === 'edit') {
+          updateTask({ ...newTask, id: route.params.editMode.key });
+        }
+        else {
+          storeTask(newTask);
+        }
+        navigation.setParams({task: null})
       }
-      else{
-        storeTask(newTask);
-      }
-    }}
-    if (route.params?.mode){
+    }
+    if (route.params?.mode) {
       setMode(route.params.mode);
     }
-    if (route.params?.filter){
-      if(route.params.filter === 'all'){
+    if (route.params?.filter) {
+      if (route.params.filter === 'all') {
         setHeaderTitle('View all');
-      } else if (route.params.filter === 'incomplete'){
+      } else if (route.params.filter === 'incomplete') {
         setHeaderTitle('View incomplete');
-      } else if (route.params.filter === 'completed'){
+      } else if (route.params.filter === 'completed') {
         setHeaderTitle('View completed');
       }
       setDisplay(route.params?.filter);
@@ -91,9 +91,9 @@ const TaskViewer = ({ route, navigation }) => {
   }, [route.params?.task, route.params, route.params?.filter]);
 
   const displayFilter = (item) => {
-    if(display==='all'){
+    if (display === 'all') {
       return true;
-    } else{
+    } else {
       return item.state === display;
     }
   }
@@ -101,27 +101,27 @@ const TaskViewer = ({ route, navigation }) => {
   return (
 
     <View style={theme.container}>
-      <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} titleSize={26} buttonColor={theme.myColors.buttonIcon}/>
-      <FlatList 
+      <HabitHeader backgroundColor={theme.myColors.header} title={headerTitle} titleSize={26} buttonColor={theme.myColors.buttonIcon} />
+      <FlatList
         keyExtractor={(item) => item.id}
         data={tasks.filter(displayFilter)}
         extraData={theme}
-        renderItem={({index, item}) => 
-          { //console.log('At flatlist, item: ', item);
-            return(<TaskView 
-            card={theme.card} 
+        renderItem={({ index, item }) => { //console.log('At flatlist, item: ', item);
+          return (<TaskView
+            card={theme.card}
             item={item}
-            bColor={theme.myColors.cards} 
-            titleStyle={{color: theme.colors.text, fontSize: 20}}  
-            textStyle={{color: theme.colors.text, fontSize: 18, fontWeight: 'bold'}}  
-            failed={false} 
+            bColor={theme.myColors.cards}
+            titleStyle={{ color: theme.colors.text, fontSize: 20 }}
+            textStyle={{ color: theme.colors.text, fontSize: 18, fontWeight: 'bold' }}
+            failed={false}
             completed={true}
             pressMode={pressMode}
-            modeSetter={setMode} 
-            />)}}
+            modeSetter={setMode}
+          />)
+        }}
       />
-      <FloatingButton 
-        buttonStyle={{color: theme.myColors.button}}
+      <FloatingButton
+        buttonStyle={{ color: theme.myColors.button }}
         setter={setMode}
         headerSetter={setHeaderTitle}
       />
@@ -130,7 +130,7 @@ const TaskViewer = ({ route, navigation }) => {
 }
 
 //<TaskField title="Completed task" bColor={Styles.myColors.cards} textStyle={{color: Styles.myColors.text}} state='completed' failed={false} completed={true} />
-  //    <TaskField title="Failed Task" bColor={Styles.myColors.cards} textStyle={{color: Styles.myColors.text}} state='failed' failed={true} />
-    //  <TaskView card={theme.card} title="Completed task" bColor={Styles.myColors.cards} textStyle={{color: Styles.myColors.text}} state='completed' failed={false} completed={true} />
+//    <TaskField title="Failed Task" bColor={Styles.myColors.cards} textStyle={{color: Styles.myColors.text}} state='failed' failed={true} />
+//  <TaskView card={theme.card} title="Completed task" bColor={Styles.myColors.cards} textStyle={{color: Styles.myColors.text}} state='completed' failed={false} completed={true} />
 
 export default TaskViewer;
